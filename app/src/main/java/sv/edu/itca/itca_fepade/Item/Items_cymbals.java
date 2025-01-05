@@ -51,28 +51,22 @@ public class Items_cymbals extends RecyclerView.Adapter<Items_cymbals.Publicacio
             holder.price.setText(price);
 
             int quantityValue = Integer.parseInt(quantity);
-
-            if (quantityValue >= 1) {
-                holder.available.setText("Cantidad: " + quantity);
-            }else{
-                holder.available.setText("Agotado ");
-            }
+            holder.available.setText(quantityValue >= 1 ? "Cantidad: " + quantity : "Agotado");
 
             if (!img.isEmpty()) {
                 byte[] decodedString = Base64.decode(img, Base64.DEFAULT);
                 Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-
                 if (decodedByte != null) {
-                    //holder.img.setImageBitmap(decodedByte);
+                    holder.img.setImageBitmap(decodedByte);
                 } else {
                     Log.e("Img", "Error al decodificar la imagen");
+                    holder.img.setImageResource(R.drawable.hogar); // Usa un marcador por defecto
                 }
             } else {
-                Log.e("img", "Imagen no disponible");
-                //holder.img.setImageResource(R.drawable.hogar);
+                holder.img.setImageResource(R.drawable.cuenta); // Usa un marcador por defecto
             }
         } catch (Exception e) {
-            Log.e("PublicacionesAdapter", "Error al obtener datos de publicación", e);
+            Log.e("Items_cymbals", "Error al procesar los datos del adaptador", e);
         }
     }
 

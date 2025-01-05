@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -81,63 +80,99 @@ public class Home extends Fragment {
     private View view;
 
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        consulta_item_cymbals();
+    private List<JSONObject> publicacionesList = new ArrayList<>();
+    private Items_cymbals adapter;
+    private RecyclerView recyclerView;
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        recyclerView = view.findViewById(R.id.items_cymbals);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new Items_cymbals(getContext(), publicacionesList);
+        recyclerView.setAdapter(adapter);
 
+        // Consultas de datos
+        consulta_item_cymbals(); // Carga textos
+        consulta_item_cymbals_img(); // Carga imágenes
         return view;
-
     }
 
-    private void consulta_item_cymbals( ) {
-        url = URL_APIS.BASE_URL + "apkmenu";
+    private void consulta_item_cymbals() {
+        url = URL_APIS.BASE_URL + "app_menu";
 
         AsyncHttpClient cliente = new AsyncHttpClient();
         cliente.get(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 if (statusCode == 200) {
-                    CargarDatos(new String(responseBody));
+                    try {
+                        JSONObject json = new JSONObject(new String(responseBody));
+                        JSONArray miArregloJSON = json.getJSONArray("message");
 
+                        // Limpia la lista antes de agregar nuevos datos
+                        publicacionesList.clear();
+
+                        for (int i = 0; i < miArregloJSON.length(); i++) {
+                            publicacionesList.add(miArregloJSON.getJSONObject(i));
+                        }
+
+                        // Notifica al adaptador después de actualizar los datos
+                        adapter.notifyDataSetChanged();
+                    } catch (JSONException e) {
+                        Log.e("consulta", "Error al procesar el JSON", e);
+                    }
                 }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Toast.makeText(getContext(), "Error: " + error.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Error cargando textos: " + error.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    private void CargarDatos(String s) {
-        RecyclerView recyclerView = view.findViewById(R.id.items_cymbals);
-        if (recyclerView == null) {
-            Log.e("consulta", "El RecyclerView es nulo");
-            return;
-        }
+    private void consulta_item_cymbals_img() {
+        url = URL_APIS.BASE_URL + "app_menu_img";
 
-        try {
-            JSONObject json = new JSONObject(s);
-            JSONArray miArregloJSON = json.getJSONArray("message");
+        AsyncHttpClient cliente = new AsyncHttpClient();
+        cliente.get(url, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                if (statusCode == 200) {
+                    try {
+                        JSONObject json = new JSONObject(new String(responseBody));
+                        JSONArray miArregloJSON = json.getJSONArray("message");
 
+                        // No limpies la lista aquí porque consulta_item_cymbals ya la limpió
+                        for (int i = 0; i < miArregloJSON.length(); i++) {
+                            JSONObject imgItem = miArregloJSON.getJSONObject(i);
 
+                            // Encuentra el objeto correspondiente en la lista actual y agrega la imagen
+                            for (JSONObject item : publicacionesList) {
+                                if (item.optString("id").equals(imgItem.optString("id"))) {
+                                    item.put("img", imgItem.optString("img"));
+                                    break;
+                                }
+                            }
+                        }
 
-            List<JSONObject> publicacionesList = new ArrayList<>();
-            for (int i = 0; i < miArregloJSON.length(); i++) {
-                publicacionesList.add(miArregloJSON.getJSONObject(i));
+                        // Notifica al adaptador después de actualizar los datos
+                        adapter.notifyDataSetChanged();
+                    } catch (JSONException e) {
+                        Log.e("consulta", "Error al procesar el JSON de imágenes", e);
+                    }
+                }
             }
 
-            Items_cymbals adapter = new Items_cymbals(getContext(), publicacionesList);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            recyclerView.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-
-        } catch (JSONException e) {
-            Log.e("consulta", "Error al procesar el JSON", e);
-        }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Toast.makeText(getContext(), "Error cargando imágenes: " + error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
+
+
+
 }
