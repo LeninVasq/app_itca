@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ITCA_FEPADE</string>
+    <string name="backgroud_images">backgroud images</string>
+    <string name="question_text">¿Aun no estas registrado?</string>
+    <string name="btn_login">Iniciar</string>
+    <string name="text_title">Inicio de Sesion</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

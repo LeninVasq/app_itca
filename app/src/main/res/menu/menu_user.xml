@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/primero"
+        android:color="#63449E" android:state_checked="true"
+        android:icon="@drawable/hogar"
+        android:title="Inicio"/>
+
+    <item
+        android:id="@+id/segundo"
+        android:color="#63449E" android:state_checked="true"
+        android:icon="@drawable/busqueda"
+        android:title="Busqueda" />
+
+    <item
+        android:id="@+id/cuarto"
+        android:color="#63449E" android:state_checked="true"
+        android:icon="@drawable/cuenta"
+        android:title="Cuenta"/>
+
+
+
+
+
+</menu>
