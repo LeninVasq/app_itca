@@ -18,7 +18,6 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import sv.edu.itca.itca_fepade.R;
 
 public class Items_cymbals extends RecyclerView.Adapter<Items_cymbals.PublicacionViewHolder> {
@@ -46,9 +45,11 @@ public class Items_cymbals extends RecyclerView.Adapter<Items_cymbals.Publicacio
             String price = Items_cymbals.optString("precio", "Precio no disponible");
             String quantity = Items_cymbals.optString("cantidad_platos", "Cantidad no disponible");
             String img = Items_cymbals.optString("img", "");
+            String id = Items_cymbals.optString("id_menu", "");
 
             holder.name.setText(name);
-            holder.price.setText(price);
+            holder.price.setText("$"+price);
+            holder.id.setText(id);
 
             int quantityValue = Integer.parseInt(quantity);
             holder.available.setText(quantityValue >= 1 ? "Cantidad: " + quantity : "Agotado");
@@ -60,10 +61,10 @@ public class Items_cymbals extends RecyclerView.Adapter<Items_cymbals.Publicacio
                     holder.img.setImageBitmap(decodedByte);
                 } else {
                     Log.e("Img", "Error al decodificar la imagen");
-                    holder.img.setImageResource(R.drawable.hogar); // Usa un marcador por defecto
+                    holder.img.setImageResource(R.drawable.hogar);
                 }
             } else {
-                holder.img.setImageResource(R.drawable.cuenta); // Usa un marcador por defecto
+                holder.img.setImageResource(R.drawable.cuenta);
             }
         } catch (Exception e) {
             Log.e("Items_cymbals", "Error al procesar los datos del adaptador", e);
@@ -87,7 +88,7 @@ public class Items_cymbals extends RecyclerView.Adapter<Items_cymbals.Publicacio
             price = itemView.findViewById(R.id.price);
             available = itemView.findViewById(R.id.available);
             img = itemView.findViewById(R.id.restaurantImage);
-           // id = itemView.findViewById(R.id.ids);
+            id = itemView.findViewById(R.id.id);
         }
     }
 }
