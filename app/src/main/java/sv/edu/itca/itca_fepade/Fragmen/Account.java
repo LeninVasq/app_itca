@@ -1,4 +1,4 @@
-package sv.edu.itca.itca_fepade.Fragmen_menu;
+package sv.edu.itca.itca_fepade.Fragmen;
 
 import android.os.Bundle;
 

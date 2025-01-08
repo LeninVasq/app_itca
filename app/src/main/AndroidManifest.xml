@@ -16,6 +16,12 @@
         android:theme="@style/Theme.ITCA_FEPADE"
         tools:targetApi="31">
         <activity
+            android:name=".Item.Items_cymbals_filter"
+            android:exported="false" />
+        <activity
+            android:name=".Item.Toolbar"
+            android:exported="false" />
+        <activity
             android:name=".Item.Items_cymbals"
             android:exported="false" />
         <activity
@@ -23,9 +29,7 @@
             android:exported="false" />
         <activity
             android:name=".Validation.Login"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".MainActivity"
             android:exported="true">

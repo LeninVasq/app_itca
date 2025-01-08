@@ -1,9 +1,8 @@
-package sv.edu.itca.itca_fepade.Fragmen_menu;
+package sv.edu.itca.itca_fepade.Fragmen;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.SearchView;
+
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,9 +11,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -80,6 +77,7 @@ public class Home extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new Items_cymbals(getContext(), Item_cymbals);
         recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setVerticalScrollBarEnabled(false);
         recyclerView.setHorizontalScrollBarEnabled(false);
 

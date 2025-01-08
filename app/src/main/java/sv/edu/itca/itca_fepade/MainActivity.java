@@ -1,7 +1,9 @@
 package sv.edu.itca.itca_fepade;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -15,13 +17,15 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import sv.edu.itca.itca_fepade.Fragmen_menu.Home;
-import sv.edu.itca.itca_fepade.Fragmen_menu.Account;
+import sv.edu.itca.itca_fepade.Fragmen.Search;
+import sv.edu.itca.itca_fepade.Fragmen.Home;
+import sv.edu.itca.itca_fepade.Fragmen.Account;
 
 public class MainActivity extends AppCompatActivity {
 
     Home home =new Home();
     Account account = new Account();
+    Search search = new Search();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,4 +76,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
     };
+
+    public void search(View view) {
+        loadFragment(search);
+    }
+
+    public void home(View view) {
+        loadFragment(home);
+    }
+
 }

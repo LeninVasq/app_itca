@@ -3,6 +3,7 @@ package sv.edu.itca.itca_fepade.Item;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,7 +12,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONObject;
@@ -20,7 +26,8 @@ import java.util.List;
 
 import sv.edu.itca.itca_fepade.R;
 
-public class Items_cymbals extends RecyclerView.Adapter<Items_cymbals.PublicacionViewHolder> {
+public class Items_cymbals_filter extends RecyclerView.Adapter<Items_cymbals_filter.CymbalsViewHolder> {
+
 
     private List<JSONObject> Items_cymbalsList;
 
@@ -28,20 +35,20 @@ public class Items_cymbals extends RecyclerView.Adapter<Items_cymbals.Publicacio
 
     private Context context;
 
-    public Items_cymbals(Context context, List<JSONObject> Items_cymbalsList) {
+    public Items_cymbals_filter(Context context, List<JSONObject> Items_cymbalsList) {
         this.context = context;
         this.Items_cymbalsList = Items_cymbalsList;
     }
 
     @NonNull
     @Override
-    public PublicacionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(context).inflate(R.layout.activity_items_cymbals, parent, false);
-        return new PublicacionViewHolder(itemView);
+    public Items_cymbals_filter.CymbalsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(context).inflate(R.layout.activity_items_cymbals_filter, parent, false);
+        return new Items_cymbals_filter.CymbalsViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PublicacionViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull Items_cymbals_filter.CymbalsViewHolder holder, int position) {
         try {
             JSONObject Items_cymbals = Items_cymbalsList.get(position);
             String name = Items_cymbals.optString("nombre", "Nombre no disponible");
@@ -80,18 +87,18 @@ public class Items_cymbals extends RecyclerView.Adapter<Items_cymbals.Publicacio
         return Items_cymbalsList != null ? Items_cymbalsList.size() : 0;
     }
 
-    public static class PublicacionViewHolder extends RecyclerView.ViewHolder {
+    public static class CymbalsViewHolder extends RecyclerView.ViewHolder {
         TextView name, price, id,available;
         ImageView img;
 
-        public PublicacionViewHolder(View itemView) {
+        public CymbalsViewHolder(View itemView) {
             super(itemView);
 
-            name = itemView.findViewById(R.id.name);
-            price = itemView.findViewById(R.id.price);
-            available = itemView.findViewById(R.id.available);
-            img = itemView.findViewById(R.id.restaurantImage);
-            id = itemView.findViewById(R.id.id);
+            name = itemView.findViewById(R.id.name_filter);
+            price = itemView.findViewById(R.id.price_filter);
+            available = itemView.findViewById(R.id.available_filter);
+            img = itemView.findViewById(R.id.restaurantImage_filter);
+            id = itemView.findViewById(R.id.id_filter);
         }
     }
 }
