@@ -1,36 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Fragmen.Home">
 
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/items_cymbals_category_name"
+        <!-- Contenedor principal dentro del LinearLayout -->
+        <!-- <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:elevation="2dp"
-            android:padding="10dp"
-            android:scrollbars="vertical"
-            />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">-->
+
+                <!-- Primer contenedor con RecyclerView de categorías -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/items_cymbals_category_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="8dp"
+                            android:elevation="2dp"
+                            android:padding="10dp"
+                            android:scrollbars="vertical" >
+
+                        </androidx.recyclerview.widget.RecyclerView>
+
+                </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="200dp"
-            >
+            android:layout_height="wrap_content">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/items_cymbals"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:scrollbars="horizontal"
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/items_cymbals"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:elevation="2dp"
-                    android:padding="10dp"
-                    android:scrollbars="vertical"/>
-
+                />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </LinearLayout>
 
-</FrameLayout>
+    <!-- Segundo contenedor con SwipeRefreshLayout y RecyclerView -->
+
+        <!-- </LinearLayout> -->
+</LinearLayout>
