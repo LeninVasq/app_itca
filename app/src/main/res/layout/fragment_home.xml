@@ -7,13 +7,21 @@
 
 
 
-
-
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/items_cymbals_category_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="2dp"
+            android:padding="10dp"
+            android:scrollbars="vertical"
+            />
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="200dp"
             >
+
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/items_cymbals"
@@ -21,7 +29,7 @@
                     android:layout_height="wrap_content"
                     android:elevation="2dp"
                     android:padding="10dp"
-                    android:scrollbars="vertical" />
+                    android:scrollbars="vertical"/>
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

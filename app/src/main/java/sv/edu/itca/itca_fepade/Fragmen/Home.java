@@ -24,11 +24,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import cz.msebera.android.httpclient.Header;
 import sv.edu.itca.itca_fepade.Item.Items_cymbals;
+import sv.edu.itca.itca_fepade.Item.header_category_name;
 import sv.edu.itca.itca_fepade.R;
 import sv.edu.itca.itca_fepade.URL_APIS;
 
@@ -39,8 +42,10 @@ public class Home extends Fragment {
     private String url;
     private View view;
     private List<JSONObject> Item_cymbals = new ArrayList<>();
+    private List<JSONObject> items_cymbals_category_name = new ArrayList<>();
     private Items_cymbals adapter;
-    private RecyclerView recyclerView;
+    private header_category_name adapter2;
+    private RecyclerView recyclerView, recyclerView2;
     private SwipeRefreshLayout swipeRefreshLayout;
 
     public Home() {
@@ -77,6 +82,13 @@ public class Home extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new Items_cymbals(getContext(), Item_cymbals);
         recyclerView.setAdapter(adapter);
+
+
+        recyclerView2 = view.findViewById(R.id.items_cymbals_category_name);
+        recyclerView2.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter2 = new header_category_name(getContext(), items_cymbals_category_name);
+        recyclerView2.setAdapter(adapter2);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setVerticalScrollBarEnabled(false);
         recyclerView.setHorizontalScrollBarEnabled(false);
@@ -107,10 +119,27 @@ public class Home extends Fragment {
                         JSONObject json = new JSONObject(new String(responseBody));
                         JSONArray miArregloJSON = json.getJSONArray("message");
                         Item_cymbals.clear();
+                        items_cymbals_category_name.clear();
+
+                        JSONArray uniqueItemsJSON = new JSONArray();
+
+                        Set<String> uniqueCategories = new HashSet<>();
+
                         for (int i = 0; i < miArregloJSON.length(); i++) {
-                            Item_cymbals.add(miArregloJSON.getJSONObject(i));
+                            JSONObject item = miArregloJSON.getJSONObject(i);
+                            Item_cymbals.add(item);
+
+                            String categoryName = item.getString("nombre_categoria");
+
+                            if (uniqueCategories.add(categoryName)) {
+                                uniqueItemsJSON.put(item);
+                                items_cymbals_category_name.add(item);
+                            }
                         }
+
                         adapter.notifyDataSetChanged();
+                        adapter2.notifyDataSetChanged();
+
                     } catch (JSONException e) {
                         Log.e("consulta", "Error al procesar el JSON de los items", e);
                     }
