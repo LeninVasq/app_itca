@@ -73,11 +73,23 @@ public class Login extends AppCompatActivity {
 
                             String mensajeBienvenida = "Bienvenido";
                             String usuario = MiJson.getString("id");
+                            String token = MiJson.getString("token");
+
+
+                            SharedPreferences tokenlogin = getSharedPreferences("token", MODE_PRIVATE);
+                            SharedPreferences.Editor tokeneditor = tokenlogin.edit();
+                            tokeneditor.putString("token", token);
+                            tokeneditor.apply();
+
+
+
                             Toast.makeText(Login.this, mensajeBienvenida, Toast.LENGTH_SHORT).show();
+
                             SharedPreferences sharedPreferences = getSharedPreferences("id", MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putString("usuario_id", usuario);
                             editor.apply();
+
                             Intent regitrarse = new Intent(Login.this, MainActivity.class);
                             startActivity(regitrarse);
 

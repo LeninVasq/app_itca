@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cardview_light_background"
-    tools:context=".Fragmen_menu.Account">
+    tools:context=".Fragmen.Account">
 
     <FrameLayout
         android:id="@+id/fragment_container"
@@ -137,14 +137,13 @@
         tools:ignore="UseCompoundDrawables" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/log_out"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="16dp"
         android:backgroundTint="#E1D2BB"
         android:drawableLeft="@drawable/cerrar"
-        android:onClick="cerrar"
         android:text="Cerrar Sesión"
         android:textColor="@color/black"
         android:textSize="18sp"

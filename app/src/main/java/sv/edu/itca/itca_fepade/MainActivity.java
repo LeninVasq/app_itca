@@ -1,9 +1,11 @@
 package sv.edu.itca.itca_fepade;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -16,12 +18,21 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import cz.msebera.android.httpclient.Header;
 import sv.edu.itca.itca_fepade.Fragmen.Search;
 import sv.edu.itca.itca_fepade.Fragmen.Home;
 import sv.edu.itca.itca_fepade.Fragmen.Account;
+import sv.edu.itca.itca_fepade.Validation.Login;
 
 public class MainActivity extends AppCompatActivity {
+
+    private String url;
 
     Home home =new Home();
     Account account = new Account();
@@ -47,6 +58,44 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             loadFragment(home);
         }
+    }
+
+
+    public void img_email(){
+        SharedPreferences sharedPreferencesusu = getSharedPreferences("id", MODE_PRIVATE);
+        String usuarioId = sharedPreferencesusu.getString("usuario_id", "");
+
+
+        url = URL_APIS.BASE_URL + "get_image_and_email/" +usuarioId;
+
+
+        AsyncHttpClient cliente = new AsyncHttpClient();
+        cliente.get(url, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                String respuesta = new String(responseBody);
+                try {
+                    JSONObject MiJson = new JSONObject(respuesta);
+                    if (MiJson.has("message")) {
+                        SharedPreferences preferences = getSharedPreferences("token", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.clear();
+                        editor.apply();
+
+                    }
+                } catch (JSONException e) {
+                    Toast.makeText(MainActivity.this,  "Error en JSON", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                Toast.makeText(MainActivity.this, "Error en els json", Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
     }
 
     private void loadFragment(Fragment fragment) {

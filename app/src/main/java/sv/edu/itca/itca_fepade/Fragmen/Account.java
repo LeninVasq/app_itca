@@ -1,5 +1,9 @@
 package sv.edu.itca.itca_fepade.Fragmen;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
@@ -8,8 +12,19 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import cz.msebera.android.httpclient.Header;
 import sv.edu.itca.itca_fepade.R;
+import sv.edu.itca.itca_fepade.URL_APIS;
+import sv.edu.itca.itca_fepade.Validation.Login;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,12 +73,65 @@ public class Account extends Fragment {
         }
     }
 
+    private  View view;
+    private Button close;
+    private String url;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setVisibility(View.GONE);
-        return inflater.inflate(R.layout.fragment_account, container, false);
+        view =  inflater.inflate(R.layout.fragment_account, container, false);
+        close = view.findViewById(R.id.log_out);
+
+        close.setOnClickListener(v -> log_out());
+
+        return view;
     }
+
+
+    public void log_out(){
+        SharedPreferences sharedPreferencesusu = getContext().getSharedPreferences("id", MODE_PRIVATE);
+        String usuarioId = sharedPreferencesusu.getString("usuario_id", "");
+
+
+        url = URL_APIS.BASE_URL + "logout/" +usuarioId;
+
+
+
+        AsyncHttpClient cliente = new AsyncHttpClient();
+        cliente.get(url, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                String respuesta = new String(responseBody);
+                try {
+                    JSONObject MiJson = new JSONObject(respuesta);
+                    if (MiJson.has("message")) {
+                        Toast.makeText(getContext(), "Se ha cerrado su session exitosamente", Toast.LENGTH_SHORT).show();
+                        SharedPreferences preferences = getContext().getSharedPreferences("token", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.clear();
+                        editor.apply();
+
+                        Intent login = new Intent(requireActivity(), Login.class);
+                        startActivity(login);
+                        requireActivity().finish();
+                    }
+                } catch (JSONException e) {
+                    Toast.makeText(getContext(), "Error en JSON", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                Toast.makeText(getContext(), "Error en els json", Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
+    }
+
 }

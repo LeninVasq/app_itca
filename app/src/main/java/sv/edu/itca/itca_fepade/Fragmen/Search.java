@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -149,6 +150,9 @@ public class Search extends Fragment {
 
 
 
+
+
+
         return view;
 
     }
@@ -156,7 +160,6 @@ public class Search extends Fragment {
     public void filter(){
         String query = search.getText().toString();
         consulta_item_cymbals_filter(query);
-        Toast.makeText(getContext(), query, Toast.LENGTH_SHORT).show();
     }
 
 

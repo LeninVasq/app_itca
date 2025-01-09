@@ -71,14 +71,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="80dp"
+        android:paddingTop="70dp"
         android:paddingBottom="80dp"
         >
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefreshLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/items_cymbals_filter"
@@ -88,7 +84,6 @@
             android:padding="10dp"
             android:scrollbars="vertical" />
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </LinearLayout>
 </FrameLayout>
