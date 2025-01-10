@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
+import sv.edu.itca.itca_fepade.Fragmen.Cymbals;
 import sv.edu.itca.itca_fepade.Fragmen.Search;
 import sv.edu.itca.itca_fepade.Fragmen.Home;
 import sv.edu.itca.itca_fepade.Fragmen.Account;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     Home home =new Home();
     Account account = new Account();
     Search search = new Search();
+    Cymbals cymbals = new Cymbals();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             loadFragment(home);
         }
+
+        img_email();
     }
 
 
@@ -65,10 +69,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferencesusu = getSharedPreferences("id", MODE_PRIVATE);
         String usuarioId = sharedPreferencesusu.getString("usuario_id", "");
 
-
-        url = URL_APIS.BASE_URL + "get_image_and_email/" +usuarioId;
-
-
+        url = URL_APIS.BASE_URL + "image_and_email/" +usuarioId;
         AsyncHttpClient cliente = new AsyncHttpClient();
         cliente.get(url, new AsyncHttpResponseHandler() {
             @Override
@@ -76,12 +77,19 @@ public class MainActivity extends AppCompatActivity {
                 String respuesta = new String(responseBody);
                 try {
                     JSONObject MiJson = new JSONObject(respuesta);
-                    if (MiJson.has("message")) {
-                        SharedPreferences preferences = getSharedPreferences("token", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.clear();
-                        editor.apply();
+                    if (MiJson.has("correo")) {
+                        String correo = MiJson.getString("correo");
+                        String img = MiJson.getString("img");
 
+                        SharedPreferences correoobtenido = getSharedPreferences("correo", MODE_PRIVATE);
+                        SharedPreferences.Editor correoedtitor = correoobtenido.edit();
+                        correoedtitor.putString("correo", correo);
+                        correoedtitor.apply();
+
+                        SharedPreferences imgobtenido = getSharedPreferences("img", MODE_PRIVATE);
+                        SharedPreferences.Editor imgeditor = imgobtenido.edit();
+                        imgeditor.putString("img", img);
+                        imgeditor.apply();
                     }
                 } catch (JSONException e) {
                     Toast.makeText(MainActivity.this,  "Error en JSON", Toast.LENGTH_SHORT).show();
@@ -91,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
-                Toast.makeText(MainActivity.this, "Error en els json", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Error en el json", Toast.LENGTH_SHORT).show();
 
 
             }
@@ -132,6 +140,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void home(View view) {
         loadFragment(home);
+    }
+
+    public void filter_by_category(View view) {
+        loadFragment(cymbals);
     }
 
 }

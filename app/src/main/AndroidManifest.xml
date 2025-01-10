@@ -16,6 +16,9 @@
         android:theme="@style/Theme.ITCA_FEPADE"
         tools:targetApi="31">
         <activity
+            android:name=".Item.Category_cymbals"
+            android:exported="false" />
+        <activity
             android:name=".splash"
             android:exported="true">
             <intent-filter>
@@ -42,8 +45,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>

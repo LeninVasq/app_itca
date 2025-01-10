@@ -4,6 +4,8 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
@@ -13,10 +15,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.Base64;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -76,6 +81,8 @@ public class Account extends Fragment {
     private  View view;
     private Button close;
     private String url;
+    private ImageView imgprofile;
+    private TextView email;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -87,6 +94,25 @@ public class Account extends Fragment {
         close = view.findViewById(R.id.log_out);
 
         close.setOnClickListener(v -> log_out());
+
+
+        imgprofile = view.findViewById(R.id.imageView);
+        email = view.findViewById(R.id.textView);
+
+        SharedPreferences correo = getContext().getSharedPreferences("correo", MODE_PRIVATE);
+        String usuariocorreo = correo.getString("correo", "");
+
+        SharedPreferences img = getContext().getSharedPreferences("img", MODE_PRIVATE);
+        String usuarioimg = img.getString("img", "");
+
+
+
+        byte[] decodedString = Base64.decode(usuarioimg, Base64.DEFAULT);
+
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+        imgprofile.setImageBitmap(decodedByte);
+        email.setText(usuariocorreo);
 
         return view;
     }
