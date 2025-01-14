@@ -1,10 +1,12 @@
 package sv.edu.itca.itca_fepade;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -143,7 +145,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void filter_by_category(View view) {
+        TextView id = view.findViewById(R.id.id_category);
+        String id_Category = id.getText().toString().trim();
+
+
+        Bundle args = new Bundle();
+        args.putString("id_category", id_Category);
+        cymbals.setArguments(args);
+
+
+
         loadFragment(cymbals);
     }
+
 
 }

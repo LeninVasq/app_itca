@@ -10,14 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONObject;
 
 import java.util.List;
 
+import sv.edu.itca.itca_fepade.Fragmen.Cymbals;
 import sv.edu.itca.itca_fepade.R;
 
 public class Items_cymbals extends RecyclerView.Adapter<Items_cymbals.PublicacionViewHolder> {
@@ -25,13 +28,17 @@ public class Items_cymbals extends RecyclerView.Adapter<Items_cymbals.Publicacio
     private List<JSONObject> Items_cymbalsList;
 
 
-
     private Context context;
+
 
     public Items_cymbals(Context context, List<JSONObject> Items_cymbalsList) {
         this.context = context;
         this.Items_cymbalsList = Items_cymbalsList;
+
     }
+
+
+
 
     @NonNull
     @Override
@@ -68,6 +75,15 @@ public class Items_cymbals extends RecyclerView.Adapter<Items_cymbals.Publicacio
                 }
             } else {
                 holder.img.setImageResource(R.drawable.cuenta);
+
+                Cymbals platoFragment = Cymbals.instance;
+
+
+                if (platoFragment != null) {
+                    platoFragment.recargar_img();
+                } else {
+                    Log.e("Fragmento", "El fragmento no está agregado");
+                }
             }
         } catch (Exception e) {
             Log.e("Items_cymbals", "Error al procesar los datos del adaptador", e);

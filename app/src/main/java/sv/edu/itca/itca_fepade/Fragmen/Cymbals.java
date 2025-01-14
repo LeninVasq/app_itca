@@ -1,5 +1,8 @@
 package sv.edu.itca.itca_fepade.Fragmen;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
@@ -12,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -43,6 +47,8 @@ public class Cymbals extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    public static Cymbals instance;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -72,6 +78,7 @@ public class Cymbals extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        instance = this;
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -83,6 +90,7 @@ public class Cymbals extends Fragment {
     private Items_cymbals adapter;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private String id_Category;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -103,19 +111,32 @@ public class Cymbals extends Fragment {
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
 
 
+
+        if (getArguments() != null) {
+             id_Category = getArguments().getString("id_category");
+        }
+
         swipeRefreshLayout.setOnRefreshListener(() -> {
-            consulta_item_cymbals();
-            consulta_item_cymbals_img();
+            consulta_item_cymbals(id_Category);
+            consulta_item_cymbals_img(id_Category);
         });
-        consulta_item_cymbals();
-        consulta_item_cymbals_img();
+        consulta_item_cymbals(id_Category);
+        consulta_item_cymbals_img(id_Category);
         return view;
+    }
+
+    public void recargar_img(){
+        consulta_item_cymbals_img(id_Category);
+        Toast.makeText(getContext(), "Recargando", Toast.LENGTH_SHORT).show();
+
     }
 
 
 
-   private void consulta_item_cymbals() {
-        url = URL_APIS.BASE_URL + "app_menu";
+   private void consulta_item_cymbals(String id_Category) {
+
+       Item_cymbals.clear();
+       url = URL_APIS.BASE_URL + "app_menu/"+id_Category;
         AsyncHttpClient cliente = new AsyncHttpClient();
         cliente.get(url, new AsyncHttpResponseHandler() {
             @Override
@@ -124,10 +145,11 @@ public class Cymbals extends Fragment {
                     try {
                         JSONObject json = new JSONObject(new String(responseBody));
                         JSONArray miArregloJSON = json.getJSONArray("message");
-                        Item_cymbals.clear();
                         for (int i = 0; i < miArregloJSON.length(); i++) {
                             Item_cymbals.add(miArregloJSON.getJSONObject(i));
                         }
+
+
                         adapter.notifyDataSetChanged();
                     } catch (JSONException e) {
                         Log.e("consulta", "Error al procesar el JSON de los items", e);
@@ -142,8 +164,9 @@ public class Cymbals extends Fragment {
         });
     }
 
-    private void consulta_item_cymbals_img() {
-        url = URL_APIS.BASE_URL + "app_menu_img";
+    private void consulta_item_cymbals_img(String id_Category) {
+
+        url = URL_APIS.BASE_URL + "app_menu_img/"+id_Category;
         AsyncHttpClient cliente = new AsyncHttpClient();
         cliente.get(url, new AsyncHttpResponseHandler() {
             @Override
@@ -167,8 +190,8 @@ public class Cymbals extends Fragment {
                                 item.put("img", imgMap.get(id));
                             }
                         }
-
                         adapter.notifyDataSetChanged();
+
                     } catch (JSONException e) {
                         Log.e("consulta", "Error al procesar el JSON de imágenes", e);
                     }
