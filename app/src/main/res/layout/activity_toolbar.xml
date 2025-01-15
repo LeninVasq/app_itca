@@ -57,13 +57,15 @@
                 android:src="@drawable/noti"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="2dp"
+                android:visibility="gone"
                 android:layout_marginEnd="16dp"/>
 
             <ImageView
                 android:id="@+id/cart_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/carrito"
+                android:onClick="undelivered_orders"
+                android:src="@drawable/reservas"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="2dp"/>
         </LinearLayout>

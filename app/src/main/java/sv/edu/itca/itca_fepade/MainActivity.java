@@ -1,6 +1,5 @@
 package sv.edu.itca.itca_fepade;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,10 +27,11 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 import sv.edu.itca.itca_fepade.Fragmen.Cymbals;
+import sv.edu.itca.itca_fepade.Fragmen.Orders;
 import sv.edu.itca.itca_fepade.Fragmen.Search;
 import sv.edu.itca.itca_fepade.Fragmen.Home;
 import sv.edu.itca.itca_fepade.Fragmen.Account;
-import sv.edu.itca.itca_fepade.Validation.Login;
+import sv.edu.itca.itca_fepade.Fragmen.Undelivered_orders;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
     Account account = new Account();
     Search search = new Search();
     Cymbals cymbals = new Cymbals();
+    Orders orders = new Orders();
+    Undelivered_orders undelivered_orders = new Undelivered_orders();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,8 +125,8 @@ public class MainActivity extends AppCompatActivity {
                 case "Inicio":
                     loadFragment(home);
                     return true;
-                case "Busqueda":
-                    //loadFragment(eligir);
+                case "Pedidos":
+                    loadFragment(orders);
                     return true;
 
                 case "Cuenta":
@@ -156,6 +159,23 @@ public class MainActivity extends AppCompatActivity {
 
 
         loadFragment(cymbals);
+    }
+
+    public void selected_cymbals(View view) {
+        TextView id = view.findViewById(R.id.id_cymbals);
+        String id_cymbals = id.getText().toString().trim();
+
+
+        Intent intent = new Intent(MainActivity.this, cymbals.class);
+        intent.putExtra("id_cymbals", id_cymbals);
+        startActivity(intent);
+
+
+    }
+
+
+    public void undelivered_orders(View view) {
+        loadFragment(undelivered_orders);
     }
 
 

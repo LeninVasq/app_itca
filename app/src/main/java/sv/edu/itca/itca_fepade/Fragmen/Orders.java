@@ -2,6 +2,7 @@ package sv.edu.itca.itca_fepade.Fragmen;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -12,10 +13,10 @@ import sv.edu.itca.itca_fepade.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link plate_information#newInstance} factory method to
+ * Use the {@link Orders#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class plate_information extends Fragment {
+public class Orders extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +27,7 @@ public class plate_information extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public plate_information() {
+    public Orders() {
         // Required empty public constructor
     }
 
@@ -36,11 +37,11 @@ public class plate_information extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment plate_information.
+     * @return A new instance of fragment Orders.
      */
     // TODO: Rename and change types and number of parameters
-    public static plate_information newInstance(String param1, String param2) {
-        plate_information fragment = new plate_information();
+    public static Orders newInstance(String param1, String param2) {
+        Orders fragment = new Orders();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -57,10 +58,15 @@ public class plate_information extends Fragment {
         }
     }
 
+    private View view;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_plate_information, container, false);
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setVisibility(View.GONE);
+        view= inflater.inflate(R.layout.fragment_orders, container, false);
+        return view;
     }
 }

@@ -107,7 +107,7 @@ public class Items_cymbals extends RecyclerView.Adapter<Items_cymbals.Publicacio
             price = itemView.findViewById(R.id.price);
             available = itemView.findViewById(R.id.available);
             img = itemView.findViewById(R.id.restaurantImage);
-            id = itemView.findViewById(R.id.id);
+            id = itemView.findViewById(R.id.id_cymbals);
         }
     }
 }

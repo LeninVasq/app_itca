@@ -82,7 +82,7 @@ public class Sign_up extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
             }
         });
-        //validacion de contra
+
         txt_password.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -97,7 +97,7 @@ public class Sign_up extends AppCompatActivity {
                     tvrequirements.setText("✔ Contraseña válida");
                     tvrequirements.setTextColor(getResources().getColor(android.R.color.holo_green_light));
                     btn_register.setEnabled(true);
-                    btn_register.setBackgroundColor(getResources().getColor(R.color.black));
+                    btn_register.setBackgroundResource(R.drawable.btn_square);
 
                 } else {
                     tvrequirements.setText(mensaje);

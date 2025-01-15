@@ -9,8 +9,8 @@
     <item
         android:id="@+id/segundo"
         android:color="#63449E" android:state_checked="true"
-        android:icon="@drawable/busqueda"
-        android:title="Busqueda" />
+        android:icon="@drawable/pedidos"
+        android:title="Pedidos" />
 
     <item
         android:id="@+id/cuarto"

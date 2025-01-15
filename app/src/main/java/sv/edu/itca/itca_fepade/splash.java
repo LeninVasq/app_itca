@@ -32,9 +32,9 @@ public class splash extends AppCompatActivity {
         SharedPreferences sharedPreferencesusu = getSharedPreferences("token", MODE_PRIVATE);
         String token = sharedPreferencesusu.getString("token", "");
 
+        Handler controller = new Handler();
 
         if (token.isEmpty()) {
-            Handler controller = new Handler();
             controller.postDelayed(() -> {
                 if (!not_back) {
                     Intent login = new Intent(splash.this, Login.class);
@@ -45,7 +45,6 @@ public class splash extends AppCompatActivity {
             }, 3000);
         }
         else{
-            Handler controller = new Handler();
             controller.postDelayed(() -> {
                 if (!not_back) {
                     Intent login = new Intent(splash.this, MainActivity.class);

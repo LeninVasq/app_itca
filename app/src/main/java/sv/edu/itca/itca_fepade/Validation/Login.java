@@ -90,8 +90,10 @@ public class Login extends AppCompatActivity {
                             editor.putString("usuario_id", usuario);
                             editor.apply();
 
-                            Intent regitrarse = new Intent(Login.this, MainActivity.class);
-                            startActivity(regitrarse);
+                            Intent log_in = new Intent(Login.this, MainActivity.class);
+                            startActivity(log_in);
+                            finish();
+
 
                         }
                         else{

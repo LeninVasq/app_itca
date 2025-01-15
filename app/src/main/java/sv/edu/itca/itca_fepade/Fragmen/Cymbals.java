@@ -127,8 +127,6 @@ public class Cymbals extends Fragment {
 
     public void recargar_img(){
         consulta_item_cymbals_img(id_Category);
-        Toast.makeText(getContext(), "Recargando", Toast.LENGTH_SHORT).show();
-
     }
 
 
