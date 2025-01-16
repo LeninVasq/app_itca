@@ -2,8 +2,10 @@ package sv.edu.itca.itca_fepade.Fragmen;
 
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -35,6 +37,7 @@ import java.util.List;
 import cz.msebera.android.httpclient.Header;
 import sv.edu.itca.itca_fepade.Item.Items_cymbals;
 import sv.edu.itca.itca_fepade.Item.Items_cymbals_filter;
+import sv.edu.itca.itca_fepade.MainActivity;
 import sv.edu.itca.itca_fepade.R;
 import sv.edu.itca.itca_fepade.URL_APIS;
 
@@ -95,9 +98,29 @@ public class Search extends Fragment {
 
 
 
+    private boolean puedesRetroceder() {
+        return true;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(),
+                new OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        if (puedesRetroceder()) {
+                            if (getActivity() != null) {
+                                ((MainActivity) getActivity()).home(view);
+                            }
+                        } else {
+                            requireActivity().finish();
+                        }
+                    }
+                });
+
         // Inflate the layout for this fragment
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setVisibility(View.GONE);
@@ -149,6 +172,10 @@ public class Search extends Fragment {
         recyclerView.setAdapter(adapter);
 
 
+        recyclerView.setVerticalScrollBarEnabled(false);
+        recyclerView.setHorizontalScrollBarEnabled(false);
+
+
 
 
 
@@ -196,5 +223,8 @@ public class Search extends Fragment {
     public void clean() {
         search.setText("");
     }
+
+
+
 
 }

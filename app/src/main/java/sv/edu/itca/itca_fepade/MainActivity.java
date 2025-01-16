@@ -31,7 +31,6 @@ import sv.edu.itca.itca_fepade.Fragmen.Orders;
 import sv.edu.itca.itca_fepade.Fragmen.Search;
 import sv.edu.itca.itca_fepade.Fragmen.Home;
 import sv.edu.itca.itca_fepade.Fragmen.Account;
-import sv.edu.itca.itca_fepade.Fragmen.Undelivered_orders;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
     Search search = new Search();
     Cymbals cymbals = new Cymbals();
     Orders orders = new Orders();
-    Undelivered_orders undelivered_orders = new Undelivered_orders();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,9 +171,22 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void selected_cymbals_filter(View view) {
+        TextView id = view.findViewById(R.id.id_filter);
+        String id_cymbals = id.getText().toString().trim();
+
+
+        Intent intent = new Intent(MainActivity.this, cymbals.class);
+        intent.putExtra("id_cymbals", id_cymbals);
+        startActivity(intent);
+
+
+    }
+
 
     public void undelivered_orders(View view) {
-        loadFragment(undelivered_orders);
+        Intent intent = new Intent(MainActivity.this, Undelivered_orders.class);
+        startActivity(intent);
     }
 
 

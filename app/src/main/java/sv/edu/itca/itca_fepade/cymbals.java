@@ -40,7 +40,7 @@ import sv.edu.itca.itca_fepade.Validation.Sign_up;
 public class cymbals extends AppCompatActivity {
 
     private String url;
-    private TextView name, price, available, id, amount;
+    private TextView name, price, available, id, amount,description;
     private ImageView img;
     private int amounts = 1 ;
     private float pricesutils = 0, price_multiplication;
@@ -61,7 +61,9 @@ public class cymbals extends AppCompatActivity {
         img = findViewById(R.id.restaurantImg);
         btn_resevar = findViewById(R.id.btn_reservar);
         btnMinus = findViewById(R.id.btnMinus);
+        description = findViewById(R.id.description);
         btnPlus = findViewById(R.id.btnPlus);
+
 
         shimmerLayout = findViewById(R.id.shimmer_layout);
         nestedScrollView = findViewById(R.id.content_layout);
@@ -86,6 +88,7 @@ public class cymbals extends AppCompatActivity {
                         JSONObject json = new JSONObject(new String(responseBody));
                         JSONObject item = json.getJSONObject("message");
                         String names = item.optString("nombre", "Nombre no disponible");
+                        String desc = item.optString("descripcion", "Nombre no disponible");
                         String prices = item.optString("precio", "Nombre no disponible");
                         String avalibles = item.optString("cantidad_platos", "Nombre no disponible");
                         String ids = item.optString("id_menu", "Nombre no disponible");
@@ -96,6 +99,7 @@ public class cymbals extends AppCompatActivity {
 
                         name.setText(names);
                         price.setText(prices);
+                        description.setText(desc);
                         available.setText("Disponibles: "+avalibles);
                         id.setText(ids);
                         if (!imgBase64.isEmpty()) {
@@ -177,6 +181,8 @@ public class cymbals extends AppCompatActivity {
         parametros.put("id_usuario", usuarioId);
         parametros.put("id_menu", id_menu);
         parametros.put("cantidad", amounts);
+        parametros.put("precio", pricesutils);
+
         AsyncHttpClient cliente = new AsyncHttpClient();
         cliente.post(url, parametros, new AsyncHttpResponseHandler() {
             @Override

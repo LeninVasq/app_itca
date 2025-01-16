@@ -5,6 +5,7 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,6 +33,7 @@ import java.util.Map;
 
 import cz.msebera.android.httpclient.Header;
 import sv.edu.itca.itca_fepade.Item.Items_cymbals;
+import sv.edu.itca.itca_fepade.MainActivity;
 import sv.edu.itca.itca_fepade.R;
 import sv.edu.itca.itca_fepade.URL_APIS;
 
@@ -92,9 +94,29 @@ public class Cymbals extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private String id_Category;
 
+
+    private boolean puedesRetroceder() {
+        return true;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(),
+                new OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        if (puedesRetroceder()) {
+                            if (getActivity() != null) {
+                                ((MainActivity) getActivity()).home(view);
+                            }
+                        } else {
+                            requireActivity().finish();
+                        }
+                    }
+                });
+
         view = inflater.inflate(R.layout.fragment_cymbals, container, false);
 
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
@@ -104,7 +126,7 @@ public class Cymbals extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new Items_cymbals(getContext(), Item_cymbals);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setVerticalScrollBarEnabled(false);
         recyclerView.setHorizontalScrollBarEnabled(false);
 

@@ -16,6 +16,12 @@
         android:theme="@style/Theme.ITCA_FEPADE"
         tools:targetApi="31">
         <activity
+            android:name=".Item.Order_item"
+            android:exported="false" />
+        <activity
+            android:name=".Undelivered_orders"
+            android:exported="false" />
+        <activity
             android:name=".cymbals"
             android:exported="false" />
         <activity
