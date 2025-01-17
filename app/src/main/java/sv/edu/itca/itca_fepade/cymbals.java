@@ -192,8 +192,8 @@ public class cymbals extends AppCompatActivity {
                     JSONObject MiJson = new JSONObject(respuesta);
                     if (MiJson.has("message")) {
                         Intent main = new Intent(cymbals.this, MainActivity.class);
-                        main.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(main);
+                        main.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         finish();
                         Toast.makeText(cymbals.this, "Se ha reservado exitosamenente", Toast.LENGTH_SHORT).show();
                     }
@@ -210,6 +210,12 @@ public class cymbals extends AppCompatActivity {
                         JSONObject MiJson = new JSONObject(respuesta);
                         if (MiJson.has("excess")) {
                             String mensajeError = MiJson.getString("excess");
+                            Toast.makeText(cymbals.this, mensajeError, Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        if (MiJson.has("mesague")) {
+                            String mensajeError = MiJson.getString("mesague");
                             Toast.makeText(cymbals.this, mensajeError, Toast.LENGTH_SHORT).show();
                             return;
                         }

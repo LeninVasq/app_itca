@@ -1,11 +1,18 @@
 package sv.edu.itca.itca_fepade;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,6 +41,7 @@ public class Undelivered_orders extends AppCompatActivity {
     private Order_item adapter;
     private RecyclerView recyclerView;
     private LinearLayout messague;
+    private View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +59,78 @@ public class Undelivered_orders extends AppCompatActivity {
         recyclerView.setVerticalScrollBarEnabled(false);
         recyclerView.setHorizontalScrollBarEnabled(false);
 
+
         // Llamar a la función que carga los datos
         app_reservas();
+    }
+
+    public void get_id_reserve_item(View view) {
+        TextView textView = findViewById(R.id.id_reserve_item);
+        String text = textView.getText().toString();
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+    }
+
+
+    public void see_reserve(View view) {
+        Intent intent = new Intent(Undelivered_orders.this, see_reservation.class);
+        startActivity(intent);
+    }
+
+
+
+
+    public void delete_product(View view) {
+        TextView textView = findViewById(R.id.id_reserve_item);
+        String id_reserve_iten = textView.getText().toString();
+
+
+
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.delete_product);
+        LinearLayout delete = dialog.findViewById(R.id.delete);
+
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+
+                url = URL_APIS.BASE_URL + "reservas_item/"+id_reserve_iten ;
+                AsyncHttpClient cliente = new AsyncHttpClient();
+                cliente.delete(url, new AsyncHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                        String respuesta = new String(responseBody);
+                        try {
+                            JSONObject MiJson = new JSONObject(respuesta);
+                            if (MiJson.has("message")) {
+                                Toast.makeText(Undelivered_orders.this, "lo elimino", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            Toast.makeText(Undelivered_orders.this,  "Error sdksdjb en JSON", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                        Toast.makeText(Undelivered_orders.this, "Error en el json", Toast.LENGTH_SHORT).show();
+
+
+                    }
+                });
+            }
+        });
+
+
+
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+
     }
 
     public void app_reservas() {
@@ -63,7 +141,6 @@ public class Undelivered_orders extends AppCompatActivity {
             Toast.makeText(this, "Usuario no válido", Toast.LENGTH_SHORT).show();
             return;
         }
-
         orderItemsList.clear();
         url = URL_APIS.BASE_URL + "app_reservas/" + usuarioId;
 

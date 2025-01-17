@@ -1,10 +1,18 @@
 package sv.edu.itca.itca_fepade;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,6 +74,10 @@ public class MainActivity extends AppCompatActivity {
 
         img_email();
     }
+
+
+
+
 
 
     public void img_email(){
@@ -147,11 +159,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void filter_by_category(View view) {
         TextView id = view.findViewById(R.id.id_category);
+        TextView name = view.findViewById(R.id.name_category);
         String id_Category = id.getText().toString().trim();
+        String name_category = name.getText().toString().trim();
 
 
         Bundle args = new Bundle();
         args.putString("id_category", id_Category);
+        args.putString("name_category", name_category);
         cymbals.setArguments(args);
 
 
@@ -188,6 +203,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, Undelivered_orders.class);
         startActivity(intent);
     }
+
+
+
 
 
 }

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,13 +46,14 @@ public class Order_item extends RecyclerView.Adapter<Order_item.OrderViewHolder>
 
             // Obtener datos del JSON
             String id = item.optString("id_reservas", "ID no disponible");
+            String id_item = item.optString("id_reserva_item", "ID no disponible");
             String name = item.optString("nombre", "Nombre no disponible");
-            String img = item.optString("foto", "");
+            int amount = item.optInt("cantidad", 0);
+            Double price = item.optDouble("precio", 0);
+            String img = item.optString("img", "");
 
-
-
-            // Asignar datos a los elementos de la vista
-            //holder.id.setText(id);
+            holder.id.setText(id_item);
+            holder.details.setText( amount+" articulos • $"+amount * price);
             holder.name.setText(name);
 
 
@@ -80,13 +82,14 @@ public class Order_item extends RecyclerView.Adapter<Order_item.OrderViewHolder>
     }
 
     public static class OrderViewHolder extends RecyclerView.ViewHolder {
-        TextView id, name;
+        TextView id, name, details;
         ImageView img;
 
         public OrderViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            id = itemView.findViewById(R.id.idcate);
+            id = itemView.findViewById(R.id.id_reserve_item);
+            details = itemView.findViewById(R.id.orderDetails);
             name = itemView.findViewById(R.id.restaurantName);
             img = itemView.findViewById(R.id.restaurantLogo);
         }

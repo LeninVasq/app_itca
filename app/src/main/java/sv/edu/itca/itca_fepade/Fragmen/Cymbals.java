@@ -92,7 +92,8 @@ public class Cymbals extends Fragment {
     private Items_cymbals adapter;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private String id_Category;
+    private String id_Category,name_categor;
+    private TextView name_category;
 
 
     private boolean puedesRetroceder() {
@@ -121,7 +122,7 @@ public class Cymbals extends Fragment {
 
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setVisibility(View.GONE);
-
+        name_category = view.findViewById(R.id.name_category);
         recyclerView = view.findViewById(R.id.items_cymbals);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new Items_cymbals(getContext(), Item_cymbals);
@@ -136,7 +137,10 @@ public class Cymbals extends Fragment {
 
         if (getArguments() != null) {
              id_Category = getArguments().getString("id_category");
+             name_categor = getArguments().getString("name_category");
         }
+
+        name_category.setText(name_categor);
 
         swipeRefreshLayout.setOnRefreshListener(() -> {
             consulta_item_cymbals(id_Category);
