@@ -39,6 +39,7 @@ public class Order_item extends RecyclerView.Adapter<Order_item.OrderViewHolder>
         return new OrderViewHolder(itemView);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
         try {
@@ -49,11 +50,14 @@ public class Order_item extends RecyclerView.Adapter<Order_item.OrderViewHolder>
             String id_item = item.optString("id_reserva_item", "ID no disponible");
             String name = item.optString("nombre", "Nombre no disponible");
             int amount = item.optInt("cantidad", 0);
-            Double price = item.optDouble("precio", 0);
+            double price = item.optDouble("precio", 0);
             String img = item.optString("img", "");
 
+            double sum = amount * price;
+
+
             holder.id.setText(id_item);
-            holder.details.setText( amount+" articulos • $"+amount * price);
+            holder.details.setText( amount+" articulos • $"+sum);
             holder.name.setText(name);
 
 

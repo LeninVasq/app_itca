@@ -5,9 +5,13 @@ import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TabHost;
+import android.widget.TabWidget;
+import android.widget.Toast;
 
 import sv.edu.itca.itca_fepade.R;
 
@@ -59,6 +63,7 @@ public class Orders extends Fragment {
     }
 
     private View view;
+    private TabHost tabHost;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,6 +72,55 @@ public class Orders extends Fragment {
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setVisibility(View.GONE);
         view= inflater.inflate(R.layout.fragment_orders, container, false);
+        tabHost= view.findViewById(R.id.tabHost);
+        tabHost.setup();
+
+
+
+        TabHost.TabSpec tab1 = tabHost.newTabSpec("Carrito");
+        tab1.setIndicator("Carrito");
+        tab1.setContent(R.id.tab1);
+        tabHost.addTab(tab1);
+
+        TabHost.TabSpec tab2 = tabHost.newTabSpec("Pedidos");
+        tab2.setIndicator("Pedidos");
+        tab2.setContent(R.id.tab2);
+        tabHost.addTab(tab2);
+
+
+        tabHost.setCurrentTab(0);
+
+        tabHost.setOnTabChangedListener(tabId -> {
+            int selectedIndex = tabHost.getCurrentTab();
+            TabWidget tabWidget = tabHost.getTabWidget();
+
+            for (int i = 0; i < tabWidget.getChildCount(); i++) {
+                View tab = tabWidget.getChildAt(i);
+
+                if (i == selectedIndex) {
+                    tab.setBackgroundResource(R.drawable.tab_indicator);
+                } else {
+                    tab.setBackgroundResource(0);
+                }
+            }
+        });
+
+        int defaultTab = 0;
+        tabHost.setCurrentTab(defaultTab);
+
+        TabWidget tabWidget = tabHost.getTabWidget();
+        for (int i = 0; i < tabWidget.getChildCount(); i++) {
+            View tab = tabWidget.getChildAt(i);
+
+            if (i == defaultTab) {
+                tab.setBackgroundResource(R.drawable.tab_indicator);
+            } else {
+                tab.setBackgroundResource(0);
+            }
+        }
+
+
+
         return view;
     }
 }

@@ -41,6 +41,8 @@ public class Undelivered_orders extends AppCompatActivity {
     private Order_item adapter;
     private RecyclerView recyclerView;
     private LinearLayout messague;
+    private LinearLayout total_sub;
+    private TextView total;
     private View view;
 
     @Override
@@ -55,7 +57,10 @@ public class Undelivered_orders extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         messague = findViewById(R.id.messague);
+        total_sub = findViewById(R.id.total_sub);
+        total = findViewById(R.id.total);
         messague.setVisibility(View.GONE);
+        total_sub.setVisibility(View.GONE);
         recyclerView.setVerticalScrollBarEnabled(false);
         recyclerView.setHorizontalScrollBarEnabled(false);
 
@@ -64,11 +69,6 @@ public class Undelivered_orders extends AppCompatActivity {
         app_reservas();
     }
 
-    public void get_id_reserve_item(View view) {
-        TextView textView = findViewById(R.id.id_reserve_item);
-        String text = textView.getText().toString();
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
-    }
 
 
     public void see_reserve(View view) {
@@ -86,7 +86,9 @@ public class Undelivered_orders extends AppCompatActivity {
 
 
     public void delete_product(View view) {
-        TextView textView = findViewById(R.id.id_reserve_item);
+
+        View parent = (View) view.getParent();
+        TextView textView = parent.findViewById(R.id.id_reserve_item);
         String id_reserve_iten = textView.getText().toString();
 
 
@@ -163,15 +165,23 @@ public class Undelivered_orders extends AppCompatActivity {
                     String responseString = new String(responseBody, StandardCharsets.UTF_8);
                     JSONObject jsonResponse = new JSONObject(responseString);
 
+                    double tota_sub = 0;
                     if (jsonResponse.has("message")) {
                         JSONArray messageArray = jsonResponse.getJSONArray("message");
                         if (messageArray.length() > 0) {
                             messague.setVisibility(View.GONE);
                             for (int i = 0; i < messageArray.length(); i++) {
+                                JSONObject item = messageArray.getJSONObject(i);
+                                double amount = item.getDouble("cantidad");
+                                double price = item.getDouble("precio");
+                                tota_sub += amount * price;
                                 orderItemsList.add(messageArray.getJSONObject(i));
                             }
                             recyclerView.setVisibility(View.VISIBLE);
+                            total_sub.setVisibility(View.VISIBLE);
+                            total.setText("$ " + tota_sub);
                             adapter.notifyDataSetChanged();
+
                         } else {
                             messague.setVisibility(View.VISIBLE);
                         }
