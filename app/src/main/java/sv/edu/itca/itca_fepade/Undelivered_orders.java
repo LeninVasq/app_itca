@@ -72,7 +72,13 @@ public class Undelivered_orders extends AppCompatActivity {
 
 
     public void see_reserve(View view) {
+
+        TextView textView = findViewById(R.id.id_reserve_item);
+        String id_reserve_iten = textView.getText().toString();
+
+
         Intent intent = new Intent(Undelivered_orders.this, see_reservation.class);
+        intent.putExtra("id_reserve_item", id_reserve_iten);
         startActivity(intent);
     }
 

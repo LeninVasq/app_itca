@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -53,6 +54,7 @@
 
                 <ImageView
                     android:layout_width="120dp"
+                    android:id="@+id/img_item_reserve"
                     android:layout_height="120dp"
                     android:scaleType="centerCrop" />
 
@@ -63,6 +65,7 @@
                     android:layout_marginStart="16dp">
 
                     <TextView
+                        android:id="@+id/menu_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Combo Big King"
@@ -70,37 +73,15 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/id_reserve_item"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="¿Deseas agrandar tu combo?: Agrandado de papas y bebida ($1.00)"
-                        android:textColor="#666666"
-                        android:layout_marginTop="8dp" />
+                        android:visibility="gone"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Elige tu complemento:"
-                        android:textStyle="bold"
-                        android:layout_marginTop="16dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Aros de cebolla"
-                        android:textColor="#666666" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Elige tu bebida favorita:"
-                        android:textStyle="bold"
-                        android:layout_marginTop="16dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Soda 7 Up"
-                        android:textColor="#666666" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -111,45 +92,65 @@
                 android:gravity="end"
                 android:layout_marginBottom="16dp">
 
-                <ImageButton
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="#F1F1F1"
-                    android:src="@drawable/menos" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnMinus"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:onClick="minus"
+                    app:icon="@drawable/menos"
+                    android:backgroundTint="@null"
+                    app:rippleColor="@android:color/transparent"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:enabled="false" />
+
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="4"
+                    android:id="@+id/amount"
+                    android:layout_width="38dp"
+                    android:layout_height="25dp"
+                    android:text="1"
                     android:textSize="20sp"
-                    android:layout_marginHorizontal="16dp" />
+                    android:gravity="center" />
 
-                <ImageButton
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="#F1F1F1"
-                    android:src="@drawable/mas" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnPlus"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    app:icon="@drawable/mas"
+                    android:backgroundTint="@null"
+                    app:rippleColor="@android:color/transparent"
+                    android:onClick="plus"
+                    style="@style/Widget.MaterialComponents.Button.TextButton" />
+
             </LinearLayout>
-
-            <!-- Add Button -->
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Agregar artículos"
-                android:textSize="16sp"
-                android:backgroundTint="@color/black"
-                android:padding="16dp"
-                android:layout_marginBottom="24dp" />
-
-
-
-
-
 
 
 
         </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp">
+
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Sub Total"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:layout_marginHorizontal="16dp" />
+
+        <TextView
+            android:id="@+id/total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_marginHorizontal="16dp" />
+    </LinearLayout>
 
     <!-- Footer -->
     <Button
