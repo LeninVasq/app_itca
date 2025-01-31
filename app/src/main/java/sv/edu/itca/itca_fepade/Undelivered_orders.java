@@ -31,14 +31,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
-import sv.edu.itca.itca_fepade.Item.Order_item;
+import sv.edu.itca.itca_fepade.Item.See_Reservation;
 
 public class Undelivered_orders extends AppCompatActivity {
 
     private static final String TAG = "UndeliveredOrders";
     private String url;
     private List<JSONObject> orderItemsList = new ArrayList<>();
-    private Order_item adapter;
+    private See_Reservation adapter;
     private RecyclerView recyclerView;
     private LinearLayout messague;
     private LinearLayout total_sub;
@@ -53,7 +53,7 @@ public class Undelivered_orders extends AppCompatActivity {
         recyclerView = findViewById(R.id.undelivered_orders); // RecyclerView en el layout
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new Order_item(this, orderItemsList);
+        adapter = new See_Reservation(this, orderItemsList);
         recyclerView.setAdapter(adapter);
 
         messague = findViewById(R.id.messague);

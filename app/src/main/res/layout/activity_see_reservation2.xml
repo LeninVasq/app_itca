@@ -72,11 +72,11 @@
             </LinearLayout>
 
             <ImageButton
-                android:id="@+id/moreOptionsButton_fragment"
+                android:id="@+id/moreOptionsButton"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginEnd="-17dp"
-                android:onClick="delete_product_fragmen"
+                android:onClick="delete_product"
                 android:layout_marginTop="-20dp"
                 android:src="@drawable/puntitos"
                 android:background="@android:color/transparent"

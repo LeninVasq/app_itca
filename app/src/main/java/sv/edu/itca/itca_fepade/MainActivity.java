@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -50,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
     Cymbals cymbals = new Cymbals();
     Orders orders = new Orders();
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,8 +75,13 @@ public class MainActivity extends AppCompatActivity {
             loadFragment(home);
         }
 
+
+
+
         img_email();
     }
+
+
 
 
 
@@ -205,7 +213,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-
+    public void delete_product_fragmen(View view) {
+        if (orders != null) {
+            orders.delete_product_fragment();
+        }
+    }
 }
