@@ -52,7 +52,89 @@ tools:context=".Fragmen.Orders">
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <LinearLayout
+                    android:id="@+id/tab2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text="Pedidos"
+                        android:textSize="20dp" />
+
                     <LinearLayout
+
+                        android:id="@+id/messague_fragment_orders"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="140dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/titleText">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="24dp"
+                            android:gravity="center"
+                            android:text="¡No cuentas con Pedidos!"
+                            android:textColor="@color/black"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:gravity="center"
+                            android:paddingHorizontal="32dp"
+                            android:text="Busca y añade artículos a tus reservas.
+                             Y luego tus pedidos aparecen."
+                            android:textColor="@color/gray"
+                            android:textSize="16sp" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="24dp"
+                            android:onClick="home"
+                            android:paddingHorizontal="32dp"
+                            android:paddingVertical="12dp"
+                            android:text="Reservar ahora"
+                            android:textColor="@color/white"
+                            app:backgroundTint="@color/black"
+                            app:cornerRadius="24dp"
+                            app:iconPadding="8dp"
+                            app:iconTint="@color/white" />
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/undelivered_orders_fragment_orders"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:elevation="2dp"
+                        android:padding="10dp"
+                        android:scrollbars="vertical"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toTopOf="@+id/total_sub"
+                        app:layout_constraintTop_toBottomOf="@+id/titleText"
+                        tools:layout_editor_absoluteX="0dp" />
+
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/tab1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -157,14 +239,6 @@ tools:context=".Fragmen.Orders">
                                 android:layout_marginHorizontal="16dp"
                                 android:textSize="20sp" />
                         </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/tab2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
 
                 </LinearLayout>
 

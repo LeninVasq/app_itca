@@ -11,29 +11,22 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/Theme.ITCA_FEPADE"
         tools:targetApi="31">
 
         <activity
             android:name=".see_reservation"
             android:exported="false" />
-        <activity
-            android:name=".Item.Order_item"
-            android:exported="false" />
+
         <activity
             android:name=".Undelivered_orders"
             android:exported="false" />
         <activity
             android:name=".cymbals"
             android:exported="false" />
-        <activity
-            android:name=".Item.Select_cymbals"
-            android:exported="false" />
-        <activity
-            android:name=".Item.Category_cymbals"
-            android:exported="false" />
+
         <activity
             android:name=".splash"
             android:exported="true">
@@ -43,15 +36,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Item.Items_cymbals_filter"
-            android:exported="false" />
+
         <activity
             android:name=".Item.Toolbar"
             android:exported="false" />
-        <activity
-            android:name=".Item.Items_cymbals"
-            android:exported="false" />
+
         <activity
             android:name=".Validation.Sign_up"
             android:exported="false" />

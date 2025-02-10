@@ -161,6 +161,8 @@ public class MainActivity extends AppCompatActivity {
         loadFragment(search);
     }
 
+
+
     public void home(View view) {
         loadFragment(home);
     }
@@ -217,5 +219,17 @@ public class MainActivity extends AppCompatActivity {
         if (orders != null) {
             orders.delete_product_fragment();
         }
+    }
+
+    public void item_orders(View view) {
+
+        View parent = (View) view.getParent();
+        TextView textView = parent.findViewById(R.id.delivered_orders_id);
+        String delivered_orders_id = textView.getText().toString();
+
+        Intent intent = new Intent(MainActivity.this, see_reservation.class);
+        intent.putExtra("delivered_orders_id", delivered_orders_id);
+        startActivity(intent);
+
     }
 }

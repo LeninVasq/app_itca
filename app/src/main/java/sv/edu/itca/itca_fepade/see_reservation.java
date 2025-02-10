@@ -19,6 +19,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.loopj.android.http.AsyncHttpClient;
@@ -28,18 +30,22 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+
 import cz.msebera.android.httpclient.Header;
+import sv.edu.itca.itca_fepade.Item.See_Reservation;
+import sv.edu.itca.itca_fepade.Item.item_order_p;
 
 public class see_reservation extends AppCompatActivity {
 
     private String url;
-    private ImageView img_item_reserve;
-    private TextView menu_name, amount, total, id;
-    private int amounts = 1 ;
-    private float pricesutils = 0, price_multiplication;
-    private NestedScrollView nestedScrollView;
-    private ShimmerFrameLayout shimmerLayout;
-    private Button btn_resevar, btnMinus,btnPlus;
+    private List<JSONObject> item_orderp = new ArrayList<>();
+    private item_order_p adapter;
+    private RecyclerView recyclerView;
+    private TextView no_order;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,67 +58,71 @@ public class see_reservation extends AppCompatActivity {
             return insets;
         });
 
-        if (getIntent() != null && getIntent().hasExtra("id_reserve_item")) {
-            String id_reserve_item = getIntent().getStringExtra("id_reserve_item");
-            select_id_reserva_item(id_reserve_item);
+        if (getIntent() != null && getIntent().hasExtra("delivered_orders_id")) {
+            String delivered_orders_id = getIntent().getStringExtra("delivered_orders_id");
+            select_id_reserva_item(delivered_orders_id);
+
         }
 
-        img_item_reserve = findViewById(R.id.img_item_reserve);
-        menu_name = findViewById(R.id.menu_name);
-        amount = findViewById(R.id.amount);
-        total = findViewById(R.id.total);
-        id = findViewById(R.id.id_reserve_item);
+        recyclerView = findViewById(R.id.no_orders); // RecyclerView en el layout
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        adapter = new item_order_p(this, item_orderp);
+        recyclerView.setAdapter(adapter);
+
+        recyclerView.setVerticalScrollBarEnabled(false);
+        recyclerView.setHorizontalScrollBarEnabled(false);
+
+        no_order = findViewById(R.id.id_o);
+
 
     }
 
 
+    public void orders(View view) {
+        onBackPressed();
+    }
 
-    private void select_id_reserva_item(String id_reserve_item) {
-        url = URL_APIS.BASE_URL + "reservas_item/" + id_reserve_item;
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    private void select_id_reserva_item(String delivered_orders_id) {
+        url = URL_APIS.BASE_URL + "app_reservas_item/" + delivered_orders_id;
         AsyncHttpClient cliente = new AsyncHttpClient();
         cliente.get(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 if (statusCode == 200) {
                     try {
-                        JSONObject json = new JSONObject(new String(responseBody));
-                        JSONArray items = json.getJSONArray("message");
-                        for (int i = 0; i < items.length(); i++) {
-                            JSONObject item = items.getJSONObject(i);
+                        if (responseBody == null) {
+                            Toast.makeText(see_reservation.this, "Respuesta vacía del servidor", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
 
-                            String id_reserva_item = item.optString("id_reserva_item", "Nombre no disponible");
-                            String names = item.optString("nombre", "Nombre no disponible");
-                            String imgBase64 = item.optString("img", "");
-                            String amounts = item.optString("cantidad", "Nombre no disponible");
-                            String prices = item.optString("precio", "Nombre no disponible");
+                        String responseString = new String(responseBody, StandardCharsets.UTF_8);
+                        JSONObject jsonResponse = new JSONObject(responseString);
 
-                            int calamount = item.getInt("cantidad");
-                            double calprices =  item.getDouble("precio");
+                        double tota_sub = 0;
+                        if (jsonResponse.has("message")) {
+                            JSONArray messageArray = jsonResponse.getJSONArray("message");
+                            String id_order =  "";
+                            if (messageArray.length() > 0) {
+                                for (int i = 0; i < messageArray.length(); i++) {
+                                    JSONObject item = messageArray.getJSONObject(i);
 
-                            double  subtotal= calamount * calprices;
+                                    id_order = item.optString("id_reservas");
 
-
-
-                            total.setText("$" + subtotal );
-                            menu_name.setText(names);
-                            amount.setText(amounts);
-                            id.setText(id_reserva_item);
-
-                            if (!imgBase64.isEmpty()) {
-                                try {
-                                    byte[] decodedString = Base64.decode(imgBase64, Base64.DEFAULT);
-                                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-
-                                    if (decodedByte != null) {
-                                        img_item_reserve.setImageBitmap(decodedByte);
-                                    } else {
-                                        img_item_reserve.setImageResource(R.drawable.hogar);
-                                    }
-                                } catch (IllegalArgumentException e) {
-                                    img_item_reserve.setImageResource(R.drawable.cuenta);
+                                    item_orderp.add(messageArray.getJSONObject(i));
                                 }
-                            } else {
-                                img_item_reserve.setImageResource(R.drawable.cuenta);
+
+                                no_order.setText("N.o de pedido: "+ id_order);
+
+                                recyclerView.setVisibility(View.VISIBLE);
+
+                                adapter.notifyDataSetChanged();
+
                             }
                         }
 
@@ -126,37 +136,13 @@ public class see_reservation extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Toast.makeText(see_reservation.this, "Error cargando los datos", Toast.LENGTH_LONG).show();
+                Toast.makeText(see_reservation.this, "" + statusCode, Toast.LENGTH_LONG).show();
             }
         });
     }
 
 
-    public void plus(View view) {
-        amounts += 1;
-        price_multiplication = amounts * pricesutils ;
-        amount.setText(String.valueOf(amounts));
-        if (amounts == 5) {
-            btnPlus.setEnabled(false);
-        }
-        btnMinus.setEnabled(true);
-        total.setText("$"+price_multiplication );
 
-    }
-
-
-    public void minus(View view) {
-        amounts -= 1;
-        if (amounts == 1) {
-            btnMinus.setEnabled(false);
-        }
-        btnPlus.setEnabled(true);
-
-        price_multiplication = amounts * pricesutils ;
-        amount.setText(String.valueOf(amounts));
-        total.setText("$"+price_multiplication );
-
-    }
 
 
 }

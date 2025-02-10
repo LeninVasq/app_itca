@@ -21,145 +21,29 @@
             android:layout_height="24dp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:onClick="undelivered_orders_by_product"
+            android:onClick="orders"
             android:background="@null"
             android:src="@drawable/flecha" />
 
         <TextView
+            android:id="@+id/id_o"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Burger King"
             android:textSize="20sp"
             android:textStyle="bold" />
     </RelativeLayout>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <!-- Product Details -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="16dp">
-
-                <ImageView
-                    android:layout_width="120dp"
-                    android:id="@+id/img_item_reserve"
-                    android:layout_height="120dp"
-                    android:scaleType="centerCrop" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginStart="16dp">
-
-                    <TextView
-                        android:id="@+id/menu_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Combo Big King"
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/id_reserve_item"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
 
 
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <!-- Quantity Selector -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:layout_marginBottom="16dp">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnMinus"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:onClick="minus"
-                    app:icon="@drawable/menos"
-                    android:backgroundTint="@null"
-                    app:rippleColor="@android:color/transparent"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:enabled="false" />
-
-
-                <TextView
-                    android:id="@+id/amount"
-                    android:layout_width="38dp"
-                    android:layout_height="25dp"
-                    android:text="1"
-                    android:textSize="20sp"
-                    android:gravity="center" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnPlus"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    app:icon="@drawable/mas"
-                    android:backgroundTint="@null"
-                    app:rippleColor="@android:color/transparent"
-                    android:onClick="plus"
-                    style="@style/Widget.MaterialComponents.Button.TextButton" />
-
-            </LinearLayout>
-
-
-
-        </LinearLayout>
-    </ScrollView>
-
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/no_orders"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp">
+        android:elevation="2dp"
+        android:padding="10dp"
+        android:scrollbars="vertical" />
 
 
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Sub Total"
-            android:layout_weight="1"
-            android:textSize="20sp"
-            android:layout_marginHorizontal="16dp" />
-
-        <TextView
-            android:id="@+id/total"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:layout_marginHorizontal="16dp" />
-    </LinearLayout>
-
-    <!-- Footer -->
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Continuar"
-        android:backgroundTint="@color/black"
-        android:textSize="16sp"
-        android:padding="16dp"
-        android:layout_margin="16dp" />
 
 </LinearLayout>

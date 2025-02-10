@@ -39,6 +39,7 @@ import java.util.List;
 import cz.msebera.android.httpclient.Header;
 import sv.edu.itca.itca_fepade.Item.Category_cymbals;
 import sv.edu.itca.itca_fepade.Item.Order_item;
+import sv.edu.itca.itca_fepade.Item.delivered_orders;
 import sv.edu.itca.itca_fepade.R;
 import sv.edu.itca.itca_fepade.URL_APIS;
 import sv.edu.itca.itca_fepade.Undelivered_orders;
@@ -92,10 +93,12 @@ public class Orders extends Fragment {
 
     private View view;
     private TabHost tabHost;
-    private RecyclerView recyclerView;
-    private LinearLayout messague;
+    private RecyclerView recyclerView,recyclerView_orders;
+    private LinearLayout messague, messague_orders;
     private List<JSONObject> orderItemsList = new ArrayList<>();
+    private List<JSONObject> ItemsList = new ArrayList<>();
     private Order_item adapter;
+    private delivered_orders adapterorders;
     private String url;
     private LinearLayout total_sub;
     private TextView total;
@@ -111,6 +114,15 @@ public class Orders extends Fragment {
         tabHost.setup();
 
         messague = view.findViewById(R.id.messague_fragment);
+        messague_orders = view.findViewById(R.id.messague_fragment_orders);
+
+        recyclerView_orders = view.findViewById(R.id.undelivered_orders_fragment_orders);
+        recyclerView_orders.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapterorders = new delivered_orders(getContext(), ItemsList);
+        recyclerView_orders.setAdapter(adapterorders);
+        recyclerView_orders.setVerticalScrollBarEnabled(false);
+        recyclerView_orders.setHorizontalScrollBarEnabled(false);
+
         recyclerView = view.findViewById(R.id.undelivered_orders_fragment);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new Order_item(getContext(), orderItemsList);
@@ -165,7 +177,7 @@ public class Orders extends Fragment {
 
 
         app_reservas();
-
+        app_orders();
 
 
 
@@ -174,6 +186,59 @@ public class Orders extends Fragment {
 
 
 
+    }
+
+    public void app_orders() {
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("id", Context.MODE_PRIVATE);
+        String usuarioId = sharedPreferences.getString("usuario_id", "");
+
+        if (usuarioId.isEmpty()) {
+            Toast.makeText(getContext(), "Usuario no válido", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        ItemsList.clear();
+        url = URL_APIS.BASE_URL + "app_pedidos/" + usuarioId;
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(url, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                try {
+
+
+                    String responseString = new String(responseBody, StandardCharsets.UTF_8);
+                    JSONObject jsonResponse = new JSONObject(responseString);
+
+
+                    if (jsonResponse.has("message")) {
+                        JSONArray messageArray = jsonResponse.getJSONArray("message");
+                        if (messageArray.length() > 0) {
+                            messague_orders.setVisibility(View.GONE);
+                            for (int i = 0; i < messageArray.length(); i++) {
+                                JSONObject item = messageArray.getJSONObject(i);
+
+                                ItemsList.add(messageArray.getJSONObject(i));
+                            }
+                            recyclerView_orders.setVisibility(View.VISIBLE);
+                            adapterorders.notifyDataSetChanged();
+
+                        } else {
+                            messague_orders.setVisibility(View.VISIBLE);
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    Toast.makeText(getContext(), "Error procesando datos", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                String errorMessage = responseBody != null ? new String(responseBody, StandardCharsets.UTF_8) : error.getMessage();
+
+                Toast.makeText(getContext(), "No se pudo conectar al servidor. Intente de nuevo.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
