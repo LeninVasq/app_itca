@@ -68,8 +68,8 @@ public class delivered_orders extends RecyclerView.Adapter<delivered_orders.Publ
             String formattedTime = outputFormat.format(date);
 
 
-            holder.name.setText(formattedTime);
-            holder.details.setText(amount + "articulos • $"+price);
+            holder.name.setText("Fecha Entrega " + formattedTime);
+            holder.details.setText(amount + " articulos • $"+price);
             holder.id.setText(id);
 
 

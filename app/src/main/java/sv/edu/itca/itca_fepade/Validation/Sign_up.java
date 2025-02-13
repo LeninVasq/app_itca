@@ -3,10 +3,15 @@ package sv.edu.itca.itca_fepade.Validation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,15 +29,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
+import sv.edu.itca.itca_fepade.MainActivity;
 import sv.edu.itca.itca_fepade.R;
 import sv.edu.itca.itca_fepade.URL_APIS;
 
 public class Sign_up extends AppCompatActivity {
 
-    private EditText txt_email, txt_password;
+    private EditText txt_email, txt_password, txt_name, txt_lastname;
     private TextView tvrequirements,tvrequirements_email;
     private Button btn_register;
-    private String email, password, url;
+    private String email, password, url, name, lastname, car, geners,  cars, gener;
+
+    private boolean isGeneroSelected = false;
+    private boolean isCarreraSelected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +54,70 @@ public class Sign_up extends AppCompatActivity {
             return insets;
         });
 
+        Spinner spinnerGenero = findViewById(R.id.spinner_genero);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.genders, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerGenero.setAdapter(adapter);
+
+
+
+
+        Spinner spinnerCarrera = findViewById(R.id.spinner_carrera);
+        ArrayAdapter<CharSequence> adapterCarrera = ArrayAdapter.createFromResource(this,
+                R.array.Carrera, android.R.layout.simple_spinner_item);
+
+        adapterCarrera.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCarrera.setAdapter(adapterCarrera);
+
+
+
+        spinnerGenero.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                gener = parentView.getItemAtPosition(position).toString();
+
+                if (position > 0) {
+                    isGeneroSelected = true;
+                } else {
+                    isGeneroSelected = false;
+                }
+
+                updateButtonState();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                isGeneroSelected = false;
+                updateButtonState();
+            }
+        });
+
+        spinnerCarrera.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                cars = parentView.getItemAtPosition(position).toString();
+
+                if (position > 0) {
+                    isCarreraSelected = true;
+                } else {
+                    isCarreraSelected = false;
+                }
+
+                updateButtonState();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                isCarreraSelected = false;
+                updateButtonState();
+            }
+        });
+
+
         txt_email = findViewById(R.id.txt_email);
+        txt_name = findViewById(R.id.txt_name);
+        txt_lastname = findViewById(R.id.txt_lastname);
         txt_password = findViewById(R.id.txt_password);
         tvrequirements = findViewById(R.id.tvrequirements);
         btn_register = findViewById(R.id.btn_register);
@@ -83,6 +155,23 @@ public class Sign_up extends AppCompatActivity {
             }
         });
 
+        InputFilter[] filters = new InputFilter[]{
+                new InputFilter() {
+                    @Override
+                    public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                        if (source.toString().matches("[a-zA-Z]*")) {
+                            return null;
+                        } else {
+                            return " ";
+                        }
+                    }
+                }
+        };
+
+
+        txt_name.setFilters(filters);
+        txt_lastname.setFilters(filters);
+
         txt_password.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -115,11 +204,26 @@ public class Sign_up extends AppCompatActivity {
 
     }
 
+    private void updateButtonState() {
+        if (isGeneroSelected && isCarreraSelected) {
+            btn_register.setEnabled(true);
+            btn_register.setBackgroundResource(R.drawable.btn_square);
+        } else {
+            btn_register.setEnabled(false);
+            btn_register.setBackgroundColor(getResources().getColor(R.color.gray));
+        }
+    }
+
     public void register(View view) {
         email = txt_email.getText().toString();
         password = txt_password.getText().toString();
+        name = txt_name.getText().toString();
+        lastname = txt_lastname.getText().toString();
+        car = cars;
+        geners = gener;
 
-        if (email.isEmpty() || password.isEmpty()) {
+
+        if (email.isEmpty() || password.isEmpty() || name.isEmpty() || lastname.isEmpty()) {
             Toast.makeText(Sign_up.this, "Todos los campos son requeridos", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -129,6 +233,10 @@ public class Sign_up extends AppCompatActivity {
         parametros.put("correo", email);
         parametros.put("clave", password);
         parametros.put("id_tipo_usuario", 3);
+        parametros.put("nombre", name);
+        parametros.put("apellido", lastname);
+        parametros.put("carrera", car);
+        parametros.put("genero", geners);
         AsyncHttpClient cliente = new AsyncHttpClient();
         cliente.post(url, parametros, new AsyncHttpResponseHandler() {
             @Override

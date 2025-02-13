@@ -27,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
+import sv.edu.itca.itca_fepade.Edit_my_count;
 import sv.edu.itca.itca_fepade.R;
 import sv.edu.itca.itca_fepade.URL_APIS;
 import sv.edu.itca.itca_fepade.Validation.Login;
@@ -79,7 +80,7 @@ public class Account extends Fragment {
     }
 
     private  View view;
-    private Button close;
+    private Button close, my_count;
     private String url;
     private ImageView imgprofile;
     private TextView email;
@@ -92,8 +93,10 @@ public class Account extends Fragment {
         toolbar.setVisibility(View.GONE);
         view =  inflater.inflate(R.layout.fragment_account, container, false);
         close = view.findViewById(R.id.log_out);
+        my_count = view.findViewById(R.id.my_count);
 
         close.setOnClickListener(v -> log_out());
+        my_count.setOnClickListener(v -> count());
 
 
         imgprofile = view.findViewById(R.id.imageView);
@@ -117,6 +120,11 @@ public class Account extends Fragment {
         return view;
     }
 
+    public void count(){
+        Intent login = new Intent(requireActivity(), Edit_my_count.class);
+        startActivity(login);
+
+    }
 
     public void log_out(){
         SharedPreferences sharedPreferencesusu = getContext().getSharedPreferences("id", MODE_PRIVATE);

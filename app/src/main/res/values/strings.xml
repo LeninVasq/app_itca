@@ -6,4 +6,41 @@
     <string name="text_title">Inicio de Sesion</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string-array name="genders">
+        <item>Seleccione un género</item>
+        <item>Masculino</item>
+        <item>Femenino</item>
+    </string-array>
+
+    <string-array name="gender">
+        <item>Seleccione un género</item>
+        <item>Masculino</item>
+        <item>Femenino</item>
+    </string-array>
+
+
+
+    <string-array name="Carreras">
+        <item>Seleccione una carrera</item>
+        <item>Tecnico en ingenieria en desarrollo de Software</item>
+        <item>Tecnico en ingenieria en Electridad</item>
+        <item>Ingeniería Industrial</item>
+        <item>Licenciatura en Contaduría</item>
+        <item>Arquitectura</item>
+        <item>Medicina</item>
+    </string-array>
+
+    <string-array name="Carrera">
+        <item>Seleccione una carrera</item>
+        <item>Tecnico en ingenieria en desarrollo de Software</item>
+        <item>Tecnico en ingenieria en Electridad</item>
+        <item>Ingeniería Industrial</item>
+        <item>Licenciatura en Contaduría</item>
+        <item>Arquitectura</item>
+        <item>Medicina</item>
+    </string-array>
+
+
 </resources>
