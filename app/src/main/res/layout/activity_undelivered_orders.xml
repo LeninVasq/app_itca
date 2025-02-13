@@ -61,8 +61,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -87,12 +85,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Reservar ahora"
             android:onClick="returns"
-            android:textColor="@color/white"
             android:paddingHorizontal="32dp"
             android:paddingVertical="12dp"
-            app:backgroundTint="@color/black"
+            android:text="Reservar ahora"
+            android:textColor="@color/white"
+            app:backgroundTint="#AA3824"
             app:cornerRadius="24dp"
             app:iconPadding="8dp"
             app:iconTint="@color/white" />
@@ -111,29 +109,31 @@
         app:layout_constraintTop_toBottomOf="@+id/titleText"
         tools:layout_editor_absoluteX="0dp" />
 
-
     <LinearLayout
         android:id="@+id/total_sub"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="0dp">
-
+        android:layout_margin="16dp"
+        android:orientation="vertical">
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_weight="1"
             android:text="Sub Total"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/total"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

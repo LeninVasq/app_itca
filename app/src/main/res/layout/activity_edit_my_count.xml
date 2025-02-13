@@ -122,13 +122,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:background="@drawable/btn_square"
-                app:backgroundTint="@null"
+                android:background="#AA3824"
+                android:onClick="actualizar"
                 android:text="Guardar Cambios"
                 android:textColor="@color/white"
                 android:textSize="18sp"
-                android:onClick="actualizar"
-                />
+                app:backgroundTint="@null" />
 
         </LinearLayout>
     </ScrollView>

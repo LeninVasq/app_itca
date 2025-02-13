@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white"
-    android:elevation="2dp"
+    android:background="#FFFFFF"
+    android:elevation="4dp"
     app:contentInsetStart="16dp"
     app:contentInsetEnd="16dp"
-    android:id="@+id/main"
     tools:context=".Item.Toolbar">
 
     <LinearLayout
@@ -31,27 +31,27 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:background="?attr/selectableItemBackground"
-                android:padding="4dp">
+                android:padding="8dp"
+                android:layout_marginEnd="16dp">
 
                 <TextView
                     android:id="@+id/location_titles"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Pedidos"
-                    android:textColor="@color/black"
+                    android:textColor="#AA3824"
                     android:textSize="25sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:padding="4dp" />
 
-
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/shopping"
+                    android:contentDescription="arrow" />
             </LinearLayout>
-
-
-
-
 
         </LinearLayout>
 
-
     </LinearLayout>
 </androidx.appcompat.widget.Toolbar>
-

@@ -2,12 +2,14 @@ package sv.edu.itca.itca_fepade.Fragmen;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
@@ -32,19 +34,11 @@ import sv.edu.itca.itca_fepade.R;
 import sv.edu.itca.itca_fepade.URL_APIS;
 import sv.edu.itca.itca_fepade.Validation.Login;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Account#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class Account extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -52,15 +46,6 @@ public class Account extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment account.
-     */
-    // TODO: Rename and change types and number of parameters
     public static Account newInstance(String param1, String param2) {
         Account fragment = new Account();
         Bundle args = new Bundle();
@@ -79,7 +64,7 @@ public class Account extends Fragment {
         }
     }
 
-    private  View view;
+    private View view;
     private Button close, my_count;
     private String url;
     private ImageView imgprofile;
@@ -88,16 +73,14 @@ public class Account extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setVisibility(View.GONE);
-        view =  inflater.inflate(R.layout.fragment_account, container, false);
+        view = inflater.inflate(R.layout.fragment_account, container, false);
         close = view.findViewById(R.id.log_out);
         my_count = view.findViewById(R.id.my_count);
 
-        close.setOnClickListener(v -> log_out());
+        close.setOnClickListener(v -> showLogoutConfirmationDialog());
         my_count.setOnClickListener(v -> count());
-
 
         imgprofile = view.findViewById(R.id.imageView);
         email = view.findViewById(R.id.textView);
@@ -108,10 +91,7 @@ public class Account extends Fragment {
         SharedPreferences img = getContext().getSharedPreferences("img", MODE_PRIVATE);
         String usuarioimg = img.getString("img", "");
 
-
-
         byte[] decodedString = Base64.decode(usuarioimg, Base64.DEFAULT);
-
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
         imgprofile.setImageBitmap(decodedByte);
@@ -120,20 +100,34 @@ public class Account extends Fragment {
         return view;
     }
 
-    public void count(){
+    public void count() {
         Intent login = new Intent(requireActivity(), Edit_my_count.class);
         startActivity(login);
-
     }
 
-    public void log_out(){
+    public void showLogoutConfirmationDialog() {
+        new AlertDialog.Builder(getContext())
+                .setTitle("Cerrar sesión")
+                .setMessage("¿Estás seguro de que deseas cerrar sesión?")
+                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        log_out();
+                    }
+                })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+    public void log_out() {
         SharedPreferences sharedPreferencesusu = getContext().getSharedPreferences("id", MODE_PRIVATE);
         String usuarioId = sharedPreferencesusu.getString("usuario_id", "");
 
-
-        url = URL_APIS.BASE_URL + "logout/" +usuarioId;
-
-
+        url = URL_APIS.BASE_URL + "logout/" + usuarioId;
 
         AsyncHttpClient cliente = new AsyncHttpClient();
         cliente.get(url, new AsyncHttpResponseHandler() {
@@ -143,7 +137,7 @@ public class Account extends Fragment {
                 try {
                     JSONObject MiJson = new JSONObject(respuesta);
                     if (MiJson.has("message")) {
-                        Toast.makeText(getContext(), "Se ha cerrado su session exitosamente", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Se ha cerrado su sesión exitosamente", Toast.LENGTH_SHORT).show();
                         SharedPreferences preferences = getContext().getSharedPreferences("token", MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.clear();
@@ -160,12 +154,8 @@ public class Account extends Fragment {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
-                Toast.makeText(getContext(), "Error en els json", Toast.LENGTH_SHORT).show();
-
-
+                Toast.makeText(getContext(), "Error en el JSON", Toast.LENGTH_SHORT).show();
             }
         });
     }
-
 }

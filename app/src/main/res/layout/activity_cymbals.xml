@@ -180,13 +180,13 @@
                     android:padding="16dp">
 
                         <com.google.android.material.button.MaterialButton
-                            android:layout_width="match_parent"
-                            android:onClick="booking"
                             android:id="@+id/btn_reservar"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:background="#AA3824"
+                            android:onClick="booking"
                             android:text="Agregar a la reserva"
                             android:textColor="@color/white"
-                            android:background="@drawable/btn_square"
                             app:backgroundTint="@null" />
                 </FrameLayout>
         </LinearLayout>
