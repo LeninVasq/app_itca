@@ -136,4 +136,8 @@ public class Login extends AppCompatActivity {
         Intent regitrarse = new Intent(Login.this, Sign_up.class);
         startActivity(regitrarse);
     }
+
+    public void retrieve(View view) {
+        Toast.makeText(this, "Recuperacion", Toast.LENGTH_SHORT).show();
+    }
 }

@@ -109,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
                         correoedtitor.putString("correo", correo);
                         correoedtitor.apply();
 
+
                         SharedPreferences imgobtenido = getSharedPreferences("img", MODE_PRIVATE);
                         SharedPreferences.Editor imgeditor = imgobtenido.edit();
                         imgeditor.putString("img", img);

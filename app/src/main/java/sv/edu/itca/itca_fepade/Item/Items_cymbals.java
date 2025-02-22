@@ -3,6 +3,7 @@ package sv.edu.itca.itca_fepade.Item;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONObject;
@@ -64,6 +66,10 @@ public class Items_cymbals extends RecyclerView.Adapter<Items_cymbals.Publicacio
             int quantityValue = Integer.parseInt(quantity);
             holder.available.setText(quantityValue >= 1 ? "Cantidad: " + quantity : "Agotado");
 
+            if (quantityValue == 0) {
+                holder.cardView.setEnabled(false);
+                holder.cardView.setCardBackgroundColor(Color.GRAY);
+            }
             if (!img.isEmpty()) {
                 byte[] decodedString = Base64.decode(img, Base64.DEFAULT);
                 Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
@@ -99,11 +105,13 @@ public class Items_cymbals extends RecyclerView.Adapter<Items_cymbals.Publicacio
     public static class PublicacionViewHolder extends RecyclerView.ViewHolder {
         TextView name, price, id,available;
         ImageView img;
+        CardView cardView;
 
         public PublicacionViewHolder(View itemView) {
             super(itemView);
 
             name = itemView.findViewById(R.id.name);
+            cardView = itemView.findViewById(R.id.cardView);
             price = itemView.findViewById(R.id.price);
             available = itemView.findViewById(R.id.available);
             img = itemView.findViewById(R.id.restaurantImage);
