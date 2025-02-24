@@ -138,6 +138,6 @@ public class Login extends AppCompatActivity {
     }
 
     public void retrieve(View view) {
-        Toast.makeText(this, "Recuperacion", Toast.LENGTH_SHORT).show();
-    }
+        Intent regitrarse = new Intent(Login.this, recuperacion.class);
+        startActivity(regitrarse);    }
 }

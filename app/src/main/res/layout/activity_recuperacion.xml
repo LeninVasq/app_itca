@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center"
+    android:background="@drawable/banner"
+    tools:context=".Validation.recuperacion">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/loginText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                    android:text="Recuperacion"
+                android:textAlignment="center"
+                android:textColor="#AA3824"
+                android:textSize="36sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/txt_mensa"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:hint="Mensaje"
+                android:text="Recuperacion de contraseña"
+                android:inputType="text"
+                android:padding="8dp"
+                android:background="@drawable/rounded_input"
+                android:textColor="@color/black"
+                android:textColorHint="@color/cardview_dark_background"
+
+                android:drawableTint="#C9902B" />
+
+
+            <EditText
+                android:id="@+id/txt_email"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:drawableLeft="@drawable/baseline_email_24"
+                android:drawablePadding="8dp"
+                android:hint="Correo"
+                android:inputType="textEmailAddress"
+                android:padding="8dp"
+                android:background="@drawable/rounded_input"
+                android:textColor="@color/black"
+                android:textColorHint="@color/cardview_dark_background"
+                android:drawableTint="#C9902B" />
+
+            <TextView
+                android:id="@+id/tvrequirements_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_light"
+                android:text=""
+                android:visibility="gone" />
+
+
+            <TextView
+                android:id="@+id/tvrequirements"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_light"
+                android:text=""
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btn_register"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:onClick="mensaje"
+                android:text="Enviar"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:backgroundTint="#AA3824"
+                />
+
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
