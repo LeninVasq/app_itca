@@ -83,40 +83,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="32dp"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/white"
-        android:drawableLeft="@drawable/we"
-        android:onClick="acerca"
-        android:text="Acerca de Nosotros"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_count" />
 
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="32dp"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/white"
-        android:drawableLeft="@drawable/acercade"
-        android:onClick="quienes"
-        android:text="¿Quienes Somos?"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+
 
     <Button
         android:id="@+id/button4"
@@ -125,16 +94,16 @@
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/white"
-        android:drawableLeft="@drawable/politicas"
+        android:drawableLeft="@drawable/we"
         android:drawablePadding="20dp"
-        android:onClick="politicas"
-        android:text="Políticas de Privacidad"
+        android:onClick="Creadores"
+        android:text="Creadores"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button1"
+        app:layout_constraintTop_toBottomOf="@+id/my_count"
         tools:ignore="UseCompoundDrawables" />
 
     <Button

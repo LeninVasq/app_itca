@@ -82,8 +82,8 @@ public class recuperacion extends AppCompatActivity {
                     try {
                         String respuesta = new String(responseBody);
                         JSONObject MiJson = new JSONObject(respuesta);
-                        if (MiJson.has("error")) {
-                            String mensajeError = MiJson.getString("error");
+                        if (MiJson.has("message")) {
+                            String mensajeError = MiJson.getString("message");
                             Toast.makeText(recuperacion.this, mensajeError, Toast.LENGTH_SHORT).show();
                             return;
                         }
